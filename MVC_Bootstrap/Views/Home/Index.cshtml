@@ -1,0 +1,73 @@
+﻿@model MVC_Bootstrap.Models.HomeModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div style="align-content:center; vertical-align:middle">
+    @Html.Partial("_QmuzikDatePicker")
+</div>
+<hr />
+
+<div style="align-content:center; vertical-align:middle">
+    @Html.Partial("_DatePaginator")
+</div>
+<hr />
+
+<div style="align-content:center; vertical-align:middle">
+    @Html.Partial("_AngularDatepicker")
+</div>
+
+@*<div id="target"></div>
+
+@using (Ajax.BeginForm("PostData", "Home", new { ReturnUrl = ViewBag.ReturnUrl },
+    new AjaxOptions
+    {
+        UpdateTargetId = "target",
+        InsertionMode = InsertionMode.Replace
+    },
+    new { id = "FormPost" }))
+{
+    @Html.ValidationSummary(true)
+    <div>
+
+        @Html.TextBoxFor(t => t.Message);
+        @Html.TextBoxFor(t => t.SelectedDate);
+
+        <input type="submit" value="Upload" class="btn btn-default" id="submitUploadBtn" />
+    </div>
+}*@
+
+<script type="text/javascript">
+    $(function () {
+
+        //$("#FormPost").submit(function () {
+        //    $.ajax({
+        //        url: this.action,
+        //        type: this.method,
+        //        data: $(this).serialize(),
+        //        success: function (result, status) {
+        //            if (status == 'success') {
+        //                $("#target").html(result);
+        //            }
+        //        }
+        //    });
+        //    return false;
+        //});
+
+        //$("#FormPost").submit(function (event) {
+        //    eval($(this).attr("onsubmit")); return false;
+        //});
+
+        //$("#submitUploadBtn").click(function () {
+        //    $("#FormPost").submit();
+        //    e.preventDefault();
+        //});
+
+        //$("#submitUploadBtn").click(function (e) {
+        //    $("#FormPost").submit();
+        //    e.preventDefault();
+        //});
+    });
+
+</script>

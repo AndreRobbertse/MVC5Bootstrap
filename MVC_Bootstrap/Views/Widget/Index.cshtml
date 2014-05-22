@@ -1,0 +1,66 @@
+﻿@model List<MVC_Bootstrap.Models.PersonModel>
+
+@{
+    ViewBag.Title = "Widget Page";
+}
+<hr />
+<h3>@ViewBag.Title</h3>
+
+<div class="control-group">
+    <div class="controls">
+        <div class="form-horizontal">
+            @Html.Label("Search Name")
+            <input id="searchTerm" name="searchTerm" type="text" class="ui-autocomplete-input ui-corner-all" title="Search a Client" style="width: 80%" aria-autocomplete="list" aria-haspopup="true" />
+            <input type="hidden" id="selectedClientId" name="selectedClientId" />
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+
+        $(document).ready(function () {
+            $("#searchTerm").autocomplete({
+                source: function (request, response) {
+                    var clients = new Array();
+                    $.ajax({
+                        url: "/Widget/SearchClients",
+                        type: "POST",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.Value,
+                                    value: item.Key
+                                };
+                            }))
+                        },
+                        error: function (error) {
+                            alert(error);
+                        }
+                    })
+                },
+                minLength: 2,
+                search: function (event, ui) {
+                    $(this).addClass('progress-bar');
+                },
+                response: function (event, ui) {
+                    $(this).removeClass('progress-bar');
+                },
+                open: function () {
+                    $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+                },
+                close: function () {
+                    $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+                },
+                select: function (event, ui) {
+                    this.value = ui.item.label;
+                    $("#selectedClientId").val(ui.item.value);
+                    return false;
+                }
+            });
+        })
+
+    });
+</script>

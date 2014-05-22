@@ -1,0 +1,45 @@
+﻿
+<hr />
+<h1>Date Paginator</h1>
+<div id="datePaginator"></div>
+
+<script>
+    $(function () {
+
+        $("#datePaginator").datepaginator(
+        {
+            beforeShowDay: noWeekendsOrHolidays,
+            showOn: "both",
+            dateFormat: "dd/mm/yyyy",
+            firstDay: 1,
+            changeFirstDay: false,
+            showAnim: "slide",
+            showButtonPanel: true
+        });
+
+    });
+
+    var natDays = [
+          [1, 1, 'za'],
+          [12, 25, 'za'],
+          [12, 26, 'za']
+    ];
+
+    function noWeekendsOrHolidays(date) {
+        var noWeekend = $.datepicker.noWeekends(date);
+        if (noWeekend[0]) {
+            return nationalDays(date);
+        } else {
+            return noWeekend;
+        }
+    }
+
+    function nationalDays(date) {
+        for (i = 0; i < natDays.length; i++) {
+            if (date.getMonth() == natDays[i][0] - 1 && date.getDate() == natDays[i][1]) {
+                return [false, natDays[i][2] + '_day'];
+            }
+        }
+        return [true, ''];
+    }
+</script>

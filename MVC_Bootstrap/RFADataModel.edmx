@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RFAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Firstname" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Initials" Type="varchar" MaxLength="25" />
+          <Property Name="EmployeeNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDPassport" Type="varchar" MaxLength="50" />
+          <Property Name="ContractorNo" Type="varchar" MaxLength="50" />
+          <Property Name="Street" Type="varchar" MaxLength="100" />
+          <Property Name="Block" Type="varchar" MaxLength="100" />
+          <Property Name="City" Type="varchar" MaxLength="50" />
+          <Property Name="Country" Type="varchar" MaxLength="100" />
+          <Property Name="PostalCode" Type="varchar" MaxLength="20" />
+          <Property Name="ContactNo" Type="varchar" MaxLength="100" />
+          <Property Name="EthnicalGroupID" Type="int" />
+          <Property Name="DOB" Type="datetime" />
+          <Property Name="GenderID" Type="int" />
+          <Property Name="RegistrationDate" Type="datetime" />
+          <Property Name="EmployerID" Type="int" Nullable="false" />
+          <Property Name="CreatedByID" Type="bigint" Nullable="false" />
+          <Property Name="ModifiedByID" Type="bigint" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employer">
+          <Key>
+            <PropertyRef Name="EmployerID" />
+          </Key>
+          <Property Name="EmployerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedByID" Type="bigint" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedByID" Type="bigint" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TestSite">
+          <Key>
+            <PropertyRef Name="TestSiteID" />
+          </Key>
+          <Property Name="TestSiteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestSiteName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="SiteTypeID" Type="int" />
+          <Property Name="TestSiteAddress" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TelNo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="TestSiteLogo" Type="varbinary(max)" Nullable="false" />
+          <Property Name="EmployerID" Type="int" Nullable="false" />
+          <Property Name="PolarWatchDirectoryPath" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="UseEMSSystem" Type="bit" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedByID" Type="bigint" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedByID" Type="bigint" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TestSiteWorkingSite">
+          <Key>
+            <PropertyRef Name="TestSiteWorkingSiteID" />
+          </Key>
+          <Property Name="TestSiteWorkingSiteID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="TestSiteID" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="CreatedByID" Type="bigint" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedByID" Type="bigint" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Client_Employer">
+          <End Role="Employer" Type="Self.Employer" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employer">
+              <PropertyRef Name="EmployerID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="EmployerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestSite_Employer">
+          <End Role="Employer" Type="Self.Employer" Multiplicity="1" />
+          <End Role="TestSite" Type="Self.TestSite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employer">
+              <PropertyRef Name="EmployerID" />
+            </Principal>
+            <Dependent Role="TestSite">
+              <PropertyRef Name="EmployerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestSiteWorkingSite_TestSite">
+          <End Role="TestSite" Type="Self.TestSite" Multiplicity="1" />
+          <End Role="TestSiteWorkingSite" Type="Self.TestSiteWorkingSite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestSite">
+              <PropertyRef Name="TestSiteID" />
+            </Principal>
+            <Dependent Role="TestSiteWorkingSite">
+              <PropertyRef Name="TestSiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RFAModelStoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employer" EntityType="Self.Employer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestSite" EntityType="Self.TestSite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestSiteWorkingSite" EntityType="Self.TestSiteWorkingSite" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Client_Employer" Association="Self.FK_Client_Employer">
+            <End Role="Employer" EntitySet="Employer" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestSite_Employer" Association="Self.FK_TestSite_Employer">
+            <End Role="Employer" EntitySet="Employer" />
+            <End Role="TestSite" EntitySet="TestSite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestSiteWorkingSite_TestSite" Association="Self.FK_TestSiteWorkingSite_TestSite">
+            <End Role="TestSite" EntitySet="TestSite" />
+            <End Role="TestSiteWorkingSite" EntitySet="TestSiteWorkingSite" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RFAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firstname" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Initials" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDPassport" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContractorNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Block" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EthnicalGroupID" Type="Int32" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="GenderID" Type="Int32" />
+          <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+          <Property Name="EmployerID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedByID" Type="Int64" Nullable="false" />
+          <Property Name="ModifiedByID" Type="Int64" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employer" Relationship="Self.FK_Client_Employer" FromRole="Client" ToRole="Employer" />
+        </EntityType>
+        <EntityType Name="Employer">
+          <Key>
+            <PropertyRef Name="EmployerID" />
+          </Key>
+          <Property Name="EmployerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedByID" Type="Int64" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedByID" Type="Int64" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_Client_Employer" FromRole="Employer" ToRole="Client" />
+          <NavigationProperty Name="TestSites" Relationship="Self.FK_TestSite_Employer" FromRole="Employer" ToRole="TestSite" />
+        </EntityType>
+        <EntityType Name="TestSite">
+          <Key>
+            <PropertyRef Name="TestSiteID" />
+          </Key>
+          <Property Name="TestSiteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestSiteName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SiteTypeID" Type="Int32" />
+          <Property Name="TestSiteAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TelNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TestSiteLogo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="EmployerID" Type="Int32" Nullable="false" />
+          <Property Name="PolarWatchDirectoryPath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UseEMSSystem" Type="Boolean" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedByID" Type="Int64" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedByID" Type="Int64" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employer" Relationship="Self.FK_TestSite_Employer" FromRole="TestSite" ToRole="Employer" />
+          <NavigationProperty Name="TestSiteWorkingSites" Relationship="Self.FK_TestSiteWorkingSite_TestSite" FromRole="TestSite" ToRole="TestSiteWorkingSite" />
+        </EntityType>
+        <EntityType Name="TestSiteWorkingSite">
+          <Key>
+            <PropertyRef Name="TestSiteWorkingSiteID" />
+          </Key>
+          <Property Name="TestSiteWorkingSiteID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TestSiteID" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="CreatedByID" Type="Int64" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedByID" Type="Int64" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TestSite" Relationship="Self.FK_TestSiteWorkingSite_TestSite" FromRole="TestSiteWorkingSite" ToRole="TestSite" />
+        </EntityType>
+        <Association Name="FK_Client_Employer">
+          <End Role="Employer" Type="Self.Employer" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employer">
+              <PropertyRef Name="EmployerID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="EmployerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestSite_Employer">
+          <End Role="Employer" Type="Self.Employer" Multiplicity="1" />
+          <End Role="TestSite" Type="Self.TestSite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employer">
+              <PropertyRef Name="EmployerID" />
+            </Principal>
+            <Dependent Role="TestSite">
+              <PropertyRef Name="EmployerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestSiteWorkingSite_TestSite">
+          <End Role="TestSite" Type="Self.TestSite" Multiplicity="1" />
+          <End Role="TestSiteWorkingSite" Type="Self.TestSiteWorkingSite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestSite">
+              <PropertyRef Name="TestSiteID" />
+            </Principal>
+            <Dependent Role="TestSiteWorkingSite">
+              <PropertyRef Name="TestSiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RFAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Employers" EntityType="Self.Employer" />
+          <EntitySet Name="TestSites" EntityType="Self.TestSite" />
+          <EntitySet Name="TestSiteWorkingSites" EntityType="Self.TestSiteWorkingSite" />
+          <AssociationSet Name="FK_Client_Employer" Association="Self.FK_Client_Employer">
+            <End Role="Employer" EntitySet="Employers" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestSite_Employer" Association="Self.FK_TestSite_Employer">
+            <End Role="Employer" EntitySet="Employers" />
+            <End Role="TestSite" EntitySet="TestSites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestSiteWorkingSite_TestSite" Association="Self.FK_TestSiteWorkingSite_TestSite">
+            <End Role="TestSite" EntitySet="TestSites" />
+            <End Role="TestSiteWorkingSite" EntitySet="TestSiteWorkingSites" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RFAModelStoreContainer" CdmEntityContainer="RFAEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="RFAModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Initials" ColumnName="Initials" />
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+                <ScalarProperty Name="IDPassport" ColumnName="IDPassport" />
+                <ScalarProperty Name="ContractorNo" ColumnName="ContractorNo" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Block" ColumnName="Block" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="EthnicalGroupID" ColumnName="EthnicalGroupID" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="EmployerID" ColumnName="EmployerID" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="ModifiedByID" ColumnName="ModifiedByID" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employers">
+            <EntityTypeMapping TypeName="RFAModel.Employer">
+              <MappingFragment StoreEntitySet="Employer">
+                <ScalarProperty Name="EmployerID" ColumnName="EmployerID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedByID" ColumnName="ModifiedByID" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestSites">
+            <EntityTypeMapping TypeName="RFAModel.TestSite">
+              <MappingFragment StoreEntitySet="TestSite">
+                <ScalarProperty Name="TestSiteID" ColumnName="TestSiteID" />
+                <ScalarProperty Name="TestSiteName" ColumnName="TestSiteName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SiteTypeID" ColumnName="SiteTypeID" />
+                <ScalarProperty Name="TestSiteAddress" ColumnName="TestSiteAddress" />
+                <ScalarProperty Name="TelNo" ColumnName="TelNo" />
+                <ScalarProperty Name="TestSiteLogo" ColumnName="TestSiteLogo" />
+                <ScalarProperty Name="EmployerID" ColumnName="EmployerID" />
+                <ScalarProperty Name="PolarWatchDirectoryPath" ColumnName="PolarWatchDirectoryPath" />
+                <ScalarProperty Name="UseEMSSystem" ColumnName="UseEMSSystem" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedByID" ColumnName="ModifiedByID" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestSiteWorkingSites">
+            <EntityTypeMapping TypeName="RFAModel.TestSiteWorkingSite">
+              <MappingFragment StoreEntitySet="TestSiteWorkingSite">
+                <ScalarProperty Name="TestSiteWorkingSiteID" ColumnName="TestSiteWorkingSiteID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TestSiteID" ColumnName="TestSiteID" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreatedByID" ColumnName="CreatedByID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedByID" ColumnName="ModifiedByID" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

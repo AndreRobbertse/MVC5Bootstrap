@@ -1,0 +1,71 @@
+﻿
+<script>
+    angular.module('angDate', ['ui.bootstrap']);
+    var DatepickerCtrl = function ($scope) {
+        $scope.today = function () {
+            $scope.dt = new Date();
+        };
+        $scope.today();
+
+        $scope.clear = function () {
+            $scope.dt = null;
+        };
+
+        // Disable weekend selection
+        $scope.disabled = function (date, mode) {
+            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6) && nationalDays(date));
+        };
+
+        $scope.toggleMin = function () {
+            $scope.minDate = $scope.minDate ? null : new Date("1900-01-01");
+        };
+        $scope.toggleMin();
+
+        $scope.open = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            $scope.opened = true;
+        };
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+        $scope.initDate = new Date('2016-15-20');
+        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        $scope.format = $scope.formats[0];
+    };
+
+    var natDays = [
+          [1, 1, 'za'],
+          [12, 25, 'za'],
+          [12, 26, 'za']
+    ];
+
+    function nationalDays(date) {
+        for (i = 0; i < natDays.length; i++) {
+            if (date.getMonth() == natDays[i][0] - 1 && date.getDay() == natDays[i][1]) {
+                return false
+            }
+        }
+        return true;
+    }
+</script>
+
+
+<hr />
+<h1>Angular UI Date</h1>
+<div ng-app="angDate">
+    <div class="control-group">
+        <div class="controls">
+            <div class="form-horizontal" ng-controller="DatepickerCtrl">
+                <div style="display:inline-block; min-height:290px;">
+                    <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
+                    <datepicker ng-model="dt" min-date="minDate" show-weeks="true" date-disabled="disabled(date, mode)" datepicker-options="dateOptions" class="well well-sm"></datepicker>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

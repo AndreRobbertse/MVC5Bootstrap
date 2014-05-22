@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>typeahead.js-bootstrap.css</id>
+    <version>0.0.4</version>
+    <authors>Jake Harding,  kuroe,  hyspace,  ashleydw</authors>
+    <owners>Jake Harding,  kuroe,  hyspace,  ashleydw</owners>
+    <projectUrl>https://github.com/hyspace/typeahead.js-bootstrap3.less</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Bootstrap3 style for typehead.js using Bootstrap 3 mixins and variables. This is release 0.2.1 of https://github.com/hyspace/typeahead.js-bootstrap3.less.</description>
+    <summary>Bootstrap 3 style for typeahead.js</summary>
+    <releaseNotes>Based on discussion on https://github.com/twitter/typeahead.js/issues/378 now using code from https://github.com/hyspace/typeahead.js-bootstrap3.less project.</releaseNotes>
+    <tags>bootstrap twitter typeahead css</tags>
+    <dependencies>
+      <dependency id="bootstrap" version="3.0.0" />
+      <dependency id="Twitter.Typeahead" version="0.10.0" />
+    </dependencies>
+  </metadata>
+</package>
